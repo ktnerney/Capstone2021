@@ -11,17 +11,17 @@ from bokeh.palettes import RdYlBu3
 
 from Dashboard.utils import merge_lists
 
-class DataUsageBarChart:
-    def __init__(self, use_data: pd.DataFrame,
+class UsageBarChart:
+    def __init__(self, use_data: pd.DataFrame, title: str,
                  x_range: list, y_range: tuple,
                  y_data: list, callback: Callable[[pd.DataFrame], tuple]):
         self.user_data = use_data
-
+        self.title = title
         self.data_callback = callback
 
         self.hist_data_source = ColumnDataSource(data={'x':x_range, 'y':y_data})
 
-        self.fig = figure(title="User Minutes Usage", x_range=x_range, y_range=y_range, plot_height=500)
+        self.fig = figure(title=title, x_range=x_range, y_range=y_range, plot_height=500)
         self.fig.vbar(
             x='x',
             top='y',
@@ -53,6 +53,6 @@ class DataUsageBarChart:
 
         col = column(self.data_select, self.fig)
 
-        tab = Panel(child=col, title="Data Usage")
+        tab = Panel(child=col, title=self.title)
 
         return tab

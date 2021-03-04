@@ -10,6 +10,6 @@ from bokeh.models.widgets import Tabs
 
 from Dashboard.Dashboard import Dashboard
 
-dash = Dashboard("./test_data.csv")
+dash = Dashboard("./test_minutes.csv", "./test_data.csv")
 
 dash.render()
