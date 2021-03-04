@@ -24,4 +24,22 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 
 ## Running Visualization WebApp
 
+### Windows
+
+Open Powershell as administrator and navigate to VinfenClientPhoneTool directory and run:
+``
+poetry install
+poetry shell
+bokeh serve --show vinfenclientphonetool/myapp.py
+``
+
+### MacOSX or Linux
+
+Open Terminal:
+``
+poetry install
+poetry shell
+bokeh serve --show vinfenclientphonetool/myapp.py
+``
+
 ## Populating MySQL Database
