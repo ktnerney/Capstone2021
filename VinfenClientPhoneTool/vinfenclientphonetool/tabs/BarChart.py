@@ -2,23 +2,19 @@ from collections.abc import Callable
 
 import pandas as pd
 
-from bokeh.io import show
 from bokeh.plotting import figure
 from bokeh.layouts import column
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.models import Dropdown, ColumnDataSource
-from bokeh.palettes import RdYlBu3
-
-from Dashboard.utils import merge_lists
 
 class UsageBarChart:
-    def __init__(self, use_data: pd.DataFrame, title: str,
+    def __init__(self, db_connection, title: str,
                  x_range: list, y_range: tuple,
-                 y_data: list, callback: Callable[[pd.DataFrame], tuple]):
-        self.user_data = use_data
+                 y_data: list, dropdown_options: list, callback: Callable):
+        self.db_connection = db_connection
         self.title = title
         self.data_callback = callback
-
+        self.dropdown_options = dropdown_options
         self.hist_data_source = ColumnDataSource(data={'x':x_range, 'y':y_data})
 
         self.fig = figure(title=title, x_range=x_range, y_range=y_range, plot_height=500)
@@ -31,11 +27,10 @@ class UsageBarChart:
         self.fig.xgrid.grid_line_color = None
         self.fig.y_range.start = 0
 
-
     def select_callback(self, new):
-        y_data = self.data_callback(self.user_data, int(new.item))
+        x_data, y_data = self.data_callback(self.db_connection, int(new.item))
         self.hist_data_source.data['y'] = y_data
-
+        self.hist_data_source.data['x'] = x_data
 
     def panel(self) -> Panel:
 
@@ -43,10 +38,8 @@ class UsageBarChart:
         # Each tuple is collection of the displayed value and its corresponding
         # index in the dataframe
         users = []
-        index = 0
-        for value in self.user_data["Mobile Number"]:
-            users.append((str(value), str(index)))
-            index += 1
+        for value in self.dropdown_options:
+            users.append(str(value))
 
         self.data_select = Dropdown(name="Select User", menu=users)
         self.data_select.on_click(self.select_callback)

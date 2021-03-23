@@ -1,8 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-# Name Database
-DB_NAME = 'VINFEN_CLIENT_DB'
+from constants import DB_NAME
 
 # Create Database
 ## creating a databse called 'datacamp'
@@ -44,20 +43,20 @@ def create_db():
     TABLES = {}
     TABLES['phone'] = (
         "CREATE TABLE `phone`  ("
-        "   phone_number BIGINT UNSIGNED PRIMARY KEY"
+        "   phone_number BIGINT UNSIGNED PRIMARY KEY UNIQUE"
         ");")
        
     TABLES['client'] = (
         "CREATE TABLE `client`  ("
-        "   client_id INT PRIMARY KEY AUTO_INCREMENT,"
-        "   phone_number BIGINT UNSIGNED,"
+        "   client_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE,"
+        "   phone_number BIGINT UNSIGNED UNIQUE,"
         
-        "   FOREIGN key (phone_number) references phone(phone_number)"
+        "   CONSTRAINT fk_phone_number FOREIGN key (phone_number) references phone(phone_number)"
         ");")
 
     TABLES['usage_report'] = (
         "CREATE TABLE `usage_report`  ("
-        "   usage_report_id INT PRIMARY KEY AUTO_INCREMENT,"
+        "   usage_report_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE,"
         "   phone_number BIGINT UNSIGNED,"
         "   report_date DATE NOT NULL,"
         "   total_messages INT NOT NULL,"
@@ -70,7 +69,7 @@ def create_db():
 
     TABLES['vinfen_staff'] = (
         "CREATE TABLE `vinfen_staff`  ("
-        "   staff_id INT AUTO_INCREMENT PRIMARY KEY,"
+        "   staff_id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,"
         "   name VARCHAR(100) NOT NULL,"
         "   position VARCHAR(100) NOT NULL,"
         "   team VARCHAR(100) NOT NULL"
