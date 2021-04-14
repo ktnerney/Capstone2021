@@ -11,6 +11,7 @@ pandas = "^1.2.3"
 mysql-connector-python = "^8.0.23"
 SQLAlchemy = "^1.4.2"
 PyYAML = "^5.4.1"
+sklearn = "^0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"

@@ -11,8 +11,8 @@ import pandas as pd
 
 import yaml
 
-from Dashboard.Dashboard import Dashboard
-from constants import DB_NAME
+from vinfenclientphonetool.Dashboard.Dashboard import Dashboard
+from vinfenclientphonetool.constants import DB_NAME
 
 with open(r'../vinfen_config.yaml') as file:
     # The FullLoader parameter handles the conversion from YAML

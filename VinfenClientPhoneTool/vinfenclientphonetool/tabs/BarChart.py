@@ -28,7 +28,7 @@ class UsageBarChart:
         self.fig.y_range.start = 0
 
     def select_callback(self, new):
-        x_data, y_data = self.data_callback(self.db_connection, int(new.item))
+        x_data, y_data = self.data_callback(self.db_connection, new.item)
         self.hist_data_source.data['y'] = y_data
         self.hist_data_source.data['x'] = x_data
 
